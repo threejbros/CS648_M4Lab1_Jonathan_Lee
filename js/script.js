@@ -30,20 +30,16 @@ form.addEventListener('submit', (e) => {
 
     // INSERT A NEW ROW AT THE END OF THE EMPLOYEES TABLE
     employeesTable = $("employees");
-    var newRow = window.document.createElement("tr");
-    employeesTable.appendChild(newRow);
+
+    var newRow = employeesTable.insertRow();
 
     // INSERT A CELL FOR EACH ITEM WITHIN THE NEW ROW
-    var idCell = window.document.createElement("td");
-    newRow.appendChild(idCell);
-    var nameCell = window.document.createElement("td");
-    newRow.appendChild(nameCell);
-    var extCell = window.document.createElement("td");
-    newRow.appendChild(extCell);
-    var emailCell = window.document.createElement("td");
-    newRow.appendChild(emailCell);
-    var deptCell = window.document.createElement("td");
-    newRow.appendChild(deptCell);
+    var idCell = newRow.insertCell();
+    var nameCell = newRow.insertCell();
+    var extCell = newRow.insertCell();
+    var emailCell = newRow.insertCell();
+    var deptCell = newRow.insertCell();
+    var delBtnCell = newRow.insertCell();
 
     // APPEND THE TEXT VALUES AS TEXT NODES WITHIN THE CELLS
     idCell.appendChild(window.document.createTextNode(id));
@@ -52,24 +48,11 @@ form.addEventListener('submit', (e) => {
     emailCell.appendChild(window.document.createTextNode(email));
     deptCell.appendChild(window.document.createTextNode(department));
 
-    //-----------------ALT WAY of the previous 3 sections------------------
-    // employeesTable = $("employees");
-    // var newRow = `
-    //             <tr>
-    //                 <td>${id}</td>
-    //                 <td>${fullName}</td>
-    //                 <td>${ext}</td>
-    //                 <td>${email}</td>
-    //                 <td>${department}</td>
-    //             </tr>
-    //             `;
-    // employeesTable.innerHTML += newRow;
-    //---------------------------------------------------------------------
-
     // CREATE THE DELETE BUTTON
     var delButton = window.document.createElement("button");
     delButton.appendChild(window.document.createTextNode("X"));
-    newRow.appendChild(delButton);
+    delBtnCell.appendChild(delButton);
+    delButton.addEventListener("click", deleteEmployee);
 
     // RESET THE FORM
     form.reset();
@@ -79,6 +62,17 @@ form.addEventListener('submit', (e) => {
 
     // INCREMENENT THE NUMBER OF EMPLOYEES IN THE TABLE
     ++numberEmployees;
+
+    $("empCount").textContent = "(# Employees: " + numberEmployees + ")";
 });
 
 // DELETE EMPLOYEE
+var deleteEmployee = (e) => {
+    if (window.confirm("Are you sure you want to delete this employee?")) {
+        var index = e.target.parentNode.parentNode.rowIndex;
+        $("employees").deleteRow(index);
+        --numberEmployees;
+        $("empCount").textContent = "(# Employees: " + numberEmployees + ")";
+    }
+
+};
