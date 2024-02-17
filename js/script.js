@@ -73,11 +73,6 @@ form.addEventListener('submit', (e) => {
 
     // RESET THE FORM
     form.reset();
-    // id = "";
-    // fullName = "";
-    // ext = "";
-    // email = "";
-    // department = "";
 
     // SET FOCUS BACK TO THE ID TEXT BOX
     $("id").focus();
